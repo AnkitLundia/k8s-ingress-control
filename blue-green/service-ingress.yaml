@@ -1,0 +1,41 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: blue-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: bluegreen.demo
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: blue-service
+            port:
+              number: 8080  # Traffic to Deployment A
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: green-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/canary: "true"
+    nginx.ingress.kubernetes.io/canary-weight: "25"  # 25% traffic to Deployment B
+    nginx.ingress.kubernetes.io/upstream-hash-by: "$request_id"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: bluegreen.demo
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: green-service
+            port:
+              number: 8081  # Traffic to Deployment B

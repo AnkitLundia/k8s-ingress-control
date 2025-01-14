@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blue-app
+spec:
+  selector:
+    matchLabels:
+      app: blue-demo
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: blue-demo
+    spec:
+      containers:
+      - name: blue-app
+        image: hashicorp/http-echo
+        args: 
+          - "-text=I am blue"
+          - "-listen=:8080"
+        ports:
+        - containerPort: 8080
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: blue-service
+spec:
+  selector:
+    app: blue-demo
+  ports:
+  - port: 8080
+    targetPort: 8080  # Forward traffic to Deployment B
+    name: blue-app
+  type: NodePort

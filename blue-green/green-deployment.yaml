@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-app
+spec:
+  selector:
+    matchLabels:
+      app: green-demo
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: green-demo
+    spec:
+      containers:
+      - name: green-app
+        image: hashicorp/http-echo
+        args: 
+          - "-text=I am green"
+          - "-listen=:8081"
+        ports:
+        - containerPort: 8081
+        
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: green-service
+spec:
+  selector:
+    app: green-demo
+  ports:
+  - port: 8081
+    targetPort: 8081  # Forward traffic to Deployment B
+    name: green-app
+  type: NodePort
