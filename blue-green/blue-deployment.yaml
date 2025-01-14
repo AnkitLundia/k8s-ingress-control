@@ -31,6 +31,6 @@ spec:
     app: blue-demo
   ports:
   - port: 8080
-    targetPort: 8080  # Forward traffic to Deployment B
+    targetPort: 8080  
     name: blue-app
   type: NodePort

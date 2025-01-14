@@ -14,7 +14,7 @@ spec:
           service:
             name: blue-service
             port:
-              number: 8080  # Traffic to Deployment A
+              number: 8080  
 
 ---
 
@@ -24,7 +24,7 @@ metadata:
   name: green-ingress
   annotations:
     nginx.ingress.kubernetes.io/canary: "true"
-    nginx.ingress.kubernetes.io/canary-weight: "25"  # 25% traffic to Deployment B
+    nginx.ingress.kubernetes.io/canary-weight: "25"  
     nginx.ingress.kubernetes.io/upstream-hash-by: "$request_id"
 spec:
   ingressClassName: nginx
@@ -38,4 +38,4 @@ spec:
           service:
             name: green-service
             port:
-              number: 8081  # Traffic to Deployment B
+              number: 8081 

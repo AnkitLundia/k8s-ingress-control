@@ -29,11 +29,13 @@ This document helps you deploy blue and green deployments in Kubernetes and conf
 1. We'll run some simple commands from a temporary pod to test.
    1. Run `kubectl run -it --rm --restart=Never test-pod --image=busybox -- /bin/sh`. This will take you to the command line of the pod.
    2. Create a file `vi test_response.sh`.
-   3. Copy the contents from "traffic-test.sh" into the file created.
-   4. Save the file.
-   5. Run `chmod +x test_response.sh` to make the script executable.
-   6. Run `./test_response.sh`.
-   7. You will be able to see the count of responses received from both blue and green deployments and the count of failed requests.
+   3. Replace the ports for blue and green deployment in the "traffic-test.sh" script.
+      1. You can find the node ports by running the command `kubectl get services`.
+   4. Copy the contents from "traffic-test.sh" into the file created.
+   5. Save the file.
+   6. Run `chmod +x test_response.sh` to make the script executable.
+   7. Run `./test_response.sh`.
+   8. You will be able to see the count of responses received from both blue and green deployments and the count of failed requests.
 
 2. In case of any failed requests, further debugging will be required.
    1. You can check the NGINX logs.

@@ -77,7 +77,7 @@ resource "kubernetes_ingress_v1" "ingress_config" {
     name = each.value["name"]
     annotations = each.value["name"] == element(local.deployment_list, length(local.deployment_list) - 1)["name"] ? {} :{
       "nginx.ingress.kubernetes.io/canary" = "true"
-      "nginx.ingress.kubernetes.io/canary-weight" = each.value["traffic_weight"]  # 25% traffic to Deployment B
+      "nginx.ingress.kubernetes.io/canary-weight" = each.value["traffic_weight"]  
       "nginx.ingress.kubernetes.io/upstream-hash-by" = "$request_id"
       "nginx.ingress.kubernetes.io/affinity-canary-behavior" = "legacy"
     }

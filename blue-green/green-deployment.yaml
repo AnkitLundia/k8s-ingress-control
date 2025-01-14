@@ -32,6 +32,6 @@ spec:
     app: green-demo
   ports:
   - port: 8081
-    targetPort: 8081  # Forward traffic to Deployment B
+    targetPort: 8081  
     name: green-app
   type: NodePort
